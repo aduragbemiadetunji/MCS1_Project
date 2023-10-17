@@ -32,7 +32,7 @@ Gamma = diag(omega_is);
 Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
-simulation = 4;
+simulation = 1;
 change_position_time = 400;
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
