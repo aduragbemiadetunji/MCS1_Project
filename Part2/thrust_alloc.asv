@@ -1,0 +1,11 @@
+function [u,alpha] = thrust_alloc(tau_d)
+% Thrusters' angle
+alpha2 = 1;
+alpha4 = 1;
+alpha5 = 1;
+
+% x, y, and psi component of tau_d
+tau_db = [tau_d(1); tau_d(2); tau_d(6)];
+
+% Pseudo 
+end
