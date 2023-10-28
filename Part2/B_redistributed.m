@@ -1,4 +1,4 @@
-cleafunction [Td, alpha] = B_redistributed(tau_d)
+function [Td, alpha] = B_redistributed(tau_d)
 thr1 = [0 1 39.3].';
 thr2_x = [0 1 35.6].';
 thr2_y = [1 0 35.6].';
