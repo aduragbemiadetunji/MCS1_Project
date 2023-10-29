@@ -1,6 +1,6 @@
-function [Td, alpha] = quadprog(tau_dp)
+function [Td, alpha] = quadprog(tau_d)
 %% x, y, and psi component of tau_d
-tau = [tau_dp(1); tau_dp(2); tau_dp(6)]; 
+tau = [tau_d(1); tau_d(2); tau_d(6)]; 
 
 %% Quadratic Programming
 % Compute function arguments
