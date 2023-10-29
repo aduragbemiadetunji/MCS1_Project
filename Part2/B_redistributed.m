@@ -11,11 +11,19 @@ thr5_y = [1 0 -5].';
 B = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y];
 
 % Expected tau_d dimension : 8x1
-Td = pinv(B) * tau_d;
+tau = [tau_d(1); tau_d(2); tau_d(6)];
 
-alpha2 = atan(Td(3)/Td(2));
-alpha4 = atan(Td(6)/Td(5));
-alpha5 = atan(Td(8)/Td(7));
-alpha = [alpha2; alpha4; alpha5];
+Td_r = pinv(B) * tau;
+
+Td = [Td_r(1); 
+      sqrt(Td_r(2)^2 + Td_r(3)^2); 
+      Td_r(4); 
+      sqrt(Td_r(5)^2 + Td_r(6)^2);
+      sqrt(Td_r(7)^2 + Td_r(8)^2)];
+
+alpha2 = atan(Td_r(3)/Td_r(2));
+alpha4 = atan(Td_r(6)/Td_r(5));
+alpha5 = atan(Td_r(8)/Td_r(7));
+alpha = [0; alpha2; 0; alpha4; alpha5];
 
 end

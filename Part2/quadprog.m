@@ -100,7 +100,7 @@ Td = [u(1);
 alpha2 = atan(u(3)/u(2));
 alpha4 = atan(u(6)/u(5));
 alpha5 = atan(u(8)/u(7));
-alpha = [alpha2; alpha4; alpha5];
+alpha = [0; alpha2; 0; alpha4; alpha5];
 
 %QUESTION
 % what is u plus, u minus, s plus, s minus?
