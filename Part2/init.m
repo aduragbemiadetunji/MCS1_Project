@@ -39,11 +39,9 @@ Gamma = diag(omega_is);
 Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
-simulation = 1;
+simulation = 4;
 change_position_time = 400;
 %% PID Parameters
-Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
-Damping = diag([2.6486e5, 8.8164e5, 3.3774e8]);
 
 M = Mass;
 D = Damping;
@@ -108,9 +106,9 @@ Q = diag([1,1,1,1e2,1e2,1e2])*10e1; %tune this
 Cw = [zeros(3) eye(3)];
 H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
 
-T_n = 20; %period of interest -- can tune
+T_n = 15; %period of interest -- can tune
 omega_n = 2* pi / T_n;
-zetas = 0.1; %--- can tune
+zetas = 0.5; %--- can tune
 Omega = diag([omega_n, omega_n, omega_n]);
 Caret = diag([zetas, zetas, zetas]);
 Tb = 0.1 * eye(3); %tune the 0.1
