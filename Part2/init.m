@@ -92,7 +92,7 @@ E = [Ew, zeros(6,3);
             zeros(3,3), Eb;
             zeros(3,3),zeros(3,3)];
 
-dt = 0.01;
+dt = 0.1;
 TAU = dt*E;E = [Ew, zeros(6,3);
             zeros(3,3), zeros(3,3);
             zeros(3,3), Eb;
@@ -102,7 +102,7 @@ obs.Q = diag([1,1,0.1,1e4,1e4,1e5]);
 
 B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
 R = diag([1,1,0.1]); %tune later
-Q = diag([1,1,0.1,1e2,1e2,1e2])*10e26; %tune this
+Q = diag([1,1,1,1e2,1e2,1e2])*10e1; %tune this
 
 
 Cw = [zeros(3) eye(3)];
