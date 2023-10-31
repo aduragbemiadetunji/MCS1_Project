@@ -33,6 +33,7 @@ Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
 simulation = 4;
+observer_type = 0; % 0 - NonLinear Passive, 1 - EKF
 change_position_time = 400;
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
@@ -75,8 +76,116 @@ Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 % run("/Users/aduragbemi/Desktop/MIR/NTNU/MCS1/Project/MCS1_Project/Part2/modeling.mlx")
 % run("/Part2/nonPassiveFilter.mlx")
 % run("/Part2/test.m")
+%% PASSIVE NON LINEAR OBSERVERS CONSTANTS AND TUNING VALUES
+syms psi
+Param.T_n = [20 20 20]; %period of interest -- can tune
+Param.omega_n = 2* pi ./ Param.T_n;
+Param.zeta = [0.1 0.1 0.1]; %--- can tune
+Param.Omega = diag([Param.omega_n]);
+Param.Caret = diag([Param.zeta]);
+Param.Tb = 1 * eye(3); %tune the 0.1
+WaveModel.A_w =  [zeros(3) eye(3);
+    -Param.Omega^2 -2*Param.Caret*Param.Omega];
+WaveModel.C_w = [zeros(3) eye(3)];
+
+ModelParams.Mass =    [7.0101e+06  0            0;
+            0    8.519e+06   4.7187e+05;
+            0  4.7187e+05   3.7973e+09];
+ModelParams.Damping = diag([2.6486e5, 8.8164e5, 3.3774e8]);
+
+ModelParams.rot = [cos(psi) -sin(psi) 0;
+    sin(psi) cos(psi) 0;
+    0 0 1];
+
+npf.zeta_ni = [1.0 1.0 1.0]; %----can tune
+npf.zeta_i = [0.1 0.1 0.1]; %-----can tune
+npf.omega_i = Param.omega_n;
+npf.omega_ci = 1.3*npf.omega_i; %----can tune the 5 to make wci >>> wi
+
+npf.k1_3 =  -2 * (npf.zeta_ni - npf.zeta_i) .* (npf.omega_ci./npf.omega_i);
+npf.k4_6 = 2 * npf.omega_i .* (npf.zeta_ni-npf.zeta_i);
+npf.k7_9 = npf.omega_ci;
+npf.k10_12 = [6.5e01 6.5e06 2.5e09]; %-----can tune
+npf.k13_15 = 50*npf.k10_12; %-----can tune
+
+npf.K_1 = [diag([npf.k1_3]); diag([npf.k4_6])];
+npf.K_2 = diag([npf.k7_9]);
+npf.K_3 = diag([npf.k10_12]);
+npf.K_4 = diag([npf.k13_15]);
+%% EKF CONSTANTS AND TUNING PARAMETERS
+M = ModelParams.Mass;
+D = ModelParams.Damping;
+K_w = diag([1, 1, 1]); %-------TUNE
+Ew = [zeros(3); K_w];
+Eb = diag([1, 1, 1]); %-----TUNE 
+E = [Ew, zeros(6,3);
+            zeros(3,3), zeros(3,3);
+            zeros(3,3), Eb;
+            zeros(3,3),zeros(3,3)];
+
+dt = 0.1;
+TAU = dt*E;E = [Ew, zeros(6,3);
+            zeros(3,3), zeros(3,3);
+            zeros(3,3), Eb;
+            zeros(3,3),zeros(3,3)];
+
+obs.Q = diag([1,1,0.1,1e4,1e4,1e5]);
+
+B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
+R = diag([1,1,0.1]); %tune later
+Q = diag([1,1,1,1e2,1e2,1e2])*10e1; %tune this
 
 
+Cw = [zeros(3) eye(3)];
+H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
+
+T_n = 15; %period of interest -- can tune
+omega_n = 2* pi / T_n;
+zetas = 0.5; %--- can tune
+Omega = diag([omega_n, omega_n, omega_n]);
+Caret = diag([zetas, zetas, zetas]);
+Tb = 0.1 * eye(3); %tune the 0.1
+inv_Tb = inv(Tb);
+Aw =  [zeros(3) eye(3);
+    -Omega^2 -2*Caret*Omega];
+
+K_w = diag([1, 1, 1]); %-------TUNE
+Ew = [zeros(3); K_w];
+
+Eb = diag([1, 1, 1]); %-----TUNE
+E = [Ew, zeros(6,3);
+            zeros(3,3), zeros(3,3);
+            zeros(3,3), Eb;
+            zeros(3,3),zeros(3,3)];
 
 
+inv_M = inv(M);
+TAU = dt*E;
+%% WIND VALLUES AND CONSTANTS
+%Simulation time
+N = 500;
+
+%% Wind constants/parameters
+%Set to 1 to turn on wind effect
+wind = 1;
+
+%Wind direction
+direction_limit = pi/36;
+mean_wind_direction = pi/2;
+np_direction = 0.1;
+direction_time_constant = 100;
+
+%Slow varying wind
+slow_varying_limit = 1;
+np_slow_varying = 5;
+slow_varying_time_constant = 100;
+
+%Wind gust and mean wind component
+u10 = 12;
+height = 3;
+kappa = 0.003;
+L = 1000;
+kappa2 = 0.0026;
+gust_limit = 40;
+%% Thrust Allocation Constants/Parameters
 
