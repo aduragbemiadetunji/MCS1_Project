@@ -1,0 +1,5 @@
+clear
+clc
+%% TESTING ONLY
+tau_d = [100; 0; 0; 0; 0; pi/2];
+[u, alpha] = t(tau_d)

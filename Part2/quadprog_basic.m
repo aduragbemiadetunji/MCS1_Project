@@ -32,7 +32,7 @@ thr5_y = [1 0 -5].';
 
 B_redistributed = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y];
 
-Aeq = [B_redistributed -B_redistributed eye(3) -eye(3) 0 0];
+Aeq = [B_redistributed -B_redistributed eye(3) -eye(3)];
 beq = tau;
 
 % Thruster Saturation Constraints
