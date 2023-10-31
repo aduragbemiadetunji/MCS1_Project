@@ -27,7 +27,7 @@ thr5_x = [1 0 y5].';
 thr5_y = [0 1 x5].';
 
 % B redistributed
-B = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y]
+B = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y];
 
 %% Result
 tau = [tau_d(1); tau_d(2); tau_d(6)];
@@ -42,8 +42,25 @@ Td = [Td_r(1);
       sqrt(Td_r(7)^2 + Td_r(8)^2)];
 
 % Thruster angle
-alpha2 = atan(Td_r(3)/Td_r(2));
-alpha4 = atan(Td_r(6)/Td_r(5));
-alpha5 = atan(Td_r(8)/Td_r(7));
+if Td_r(2) == 0
+    alpha2 = pi/2;
+else
+    alpha2 = atan(Td_r(3)/Td_r(2));
+end
+if Td_r(5) == 0
+    alpha4 = pi/2;
+else
+    alpha4 = atan(Td_r(6)/Td_r(5));
+end
+if Td_r(7) == 0
+    alpha5 = pi/2;
+else
+    alpha5 = atan(Td_r(8)/Td_r(7));
+end
+
+% alpha2 = atan(Td_r(3)/Td_r(2));
+% alpha4 = atan(Td_r(6)/Td_r(5));
+% alpha5 = atan(Td_r(8)/Td_r(7));
+
 alpha = [pi/2; alpha2; pi/2; alpha4; alpha5];
 end

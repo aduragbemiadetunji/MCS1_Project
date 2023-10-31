@@ -1,0 +1,186 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>p_inv_B</title><meta name="generator" content="MATLAB 9.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-10-31"><meta name="DC.source" content="p_inv_B.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Build the B matrix</a></li><li><a href="#3">Result</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> [Td, alpha] = p_inv_B(tau_d)
+</pre><h2 id="2">Build the B matrix</h2><p>Thruster 1</p><pre class="codeinput">x1 = 39.3;
+y1 = 0;
+<span class="comment">% Thruster 2</span>
+x2 = 35.6;
+y2 = 0;
+<span class="comment">% Thruster 3</span>
+x3 = 31.3;
+y3 = 0;
+<span class="comment">% Thruster 4</span>
+x4 = -28.5;
+y4 = 5;
+<span class="comment">% Thruster 5</span>
+x5 = -28.5;
+y5 = -5;
+
+<span class="comment">% Redistributed force for each thruster</span>
+thr1 = [0 1 x1].';
+thr2_x = [1 0 y2].';
+thr2_y = [0 1 x2].';
+thr3 = [0 1 x3].';
+thr4_x = [1 0 y4].';
+thr4_y = [0 1 x4].';
+thr5_x = [1 0 y5].';
+thr5_y = [0 1 x5].';
+
+<span class="comment">% B redistributed</span>
+B = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y]
+</pre><pre class="codeoutput">
+B =
+
+  Columns 1 through 7
+
+         0    1.0000         0         0    1.0000         0    1.0000
+    1.0000         0    1.0000    1.0000         0    1.0000         0
+   39.3000         0   35.6000   31.3000    5.0000  -28.5000   -5.0000
+
+  Column 8
+
+         0
+    1.0000
+  -28.5000
+
+</pre><h2 id="3">Result</h2><pre class="codeinput">tau = [tau_d(1); tau_d(2); tau_d(6)];
+
+Td_r = pinv(B) * tau;
+
+<span class="comment">% Thruster control</span>
+Td = [Td_r(1);
+      sqrt(Td_r(2)^2 + Td_r(3)^2);
+      Td_r(4);
+      sqrt(Td_r(5)^2 + Td_r(6)^2);
+      sqrt(Td_r(7)^2 + Td_r(8)^2)];
+
+<span class="comment">% Thruster angle</span>
+alpha2 = atan(Td_r(3)/Td_r(2));
+alpha4 = atan(Td_r(6)/Td_r(5));
+alpha5 = atan(Td_r(8)/Td_r(7));
+alpha = [pi/2; alpha2; pi/2; alpha4; alpha5];
+</pre><pre class="codeoutput error">Not enough input arguments.
+
+Error in p_inv_B (line 33)
+tau = [tau_d(1); tau_d(2); tau_d(6)];
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [Td, alpha] = p_inv_B(tau_d)
+%% Build the B matrix
+% Thruster 1
+x1 = 39.3;
+y1 = 0;
+% Thruster 2
+x2 = 35.6;
+y2 = 0;
+% Thruster 3
+x3 = 31.3;
+y3 = 0;
+% Thruster 4
+x4 = -28.5;
+y4 = 5;
+% Thruster 5
+x5 = -28.5;
+y5 = -5;
+
+% Redistributed force for each thruster
+thr1 = [0 1 x1].';
+thr2_x = [1 0 y2].';
+thr2_y = [0 1 x2].';
+thr3 = [0 1 x3].';
+thr4_x = [1 0 y4].';
+thr4_y = [0 1 x4].';
+thr5_x = [1 0 y5].';
+thr5_y = [0 1 x5].';
+
+% B redistributed
+B = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y]
+
+%% Result
+tau = [tau_d(1); tau_d(2); tau_d(6)];
+
+Td_r = pinv(B) * tau;
+
+% Thruster control
+Td = [Td_r(1); 
+      sqrt(Td_r(2)^2 + Td_r(3)^2); 
+      Td_r(4); 
+      sqrt(Td_r(5)^2 + Td_r(6)^2);
+      sqrt(Td_r(7)^2 + Td_r(8)^2)];
+
+% Thruster angle
+alpha2 = atan(Td_r(3)/Td_r(2));
+alpha4 = atan(Td_r(6)/Td_r(5));
+alpha5 = atan(Td_r(8)/Td_r(7));
+alpha = [pi/2; alpha2; pi/2; alpha4; alpha5];
+end
+##### SOURCE END #####
+--></body></html>
