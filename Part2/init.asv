@@ -77,19 +77,19 @@ TAU = dt*E;E = [Ew, zeros(6,3);
 
 B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
 
-R = diag([1,1,0.001*pi/180])*10e-3; %tune later
-Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
+% R = diag([1,1,0.001*pi/180])*10e-3; %tune later
+% Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
 
-% 
-% R = diag([1  1e1 0.5e-2]);
-% Q = diag([2e-2 1e-2 1e-2 2e7 2e7 1e9]);
+
+R = diag([1  1e1 0.5e-2]);
+Q = diag([2e-2 1e-2 1e-2 2e7 2e7 1e9]);
 
 Cw = [zeros(3) eye(3)];
 H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
 
 T_n = 9; %period of interest -- can tune
 omega_n = 2* pi / T_n;
-zetas = 0.01; %--- can tune
+zetas = 0.5; %--- can tune
 Omega = diag([omega_n, omega_n, omega_n]);
 Caret = diag([zetas, zetas, zetas]);
 Tb = 0.1 * eye(3); %tune the 0.1
