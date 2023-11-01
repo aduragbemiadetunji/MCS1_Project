@@ -18,8 +18,7 @@ q = [1 10 10]; % For slackness (Needs Tuning)
 H = 2*diag([w w q q]);
 
 % Linear Objective Term
-% f = zeros(1, length(x0)); % No linear term in the objective function %USE
-% THIS ONE
+% f = zeros(1, length(x0)); % No linear term in the objective function
 f = [];
 
 % Thruster Equality Constraints
@@ -71,7 +70,26 @@ ub = [];
 options = optimoptions('quadprog', 'Algorithm', 'active-set');
 
 % Compute optimal thruster control
-x0_opt = quadprog(H,f,A,b,Aeq,beq,lb,ub,x0, options);
+x0_opt = quadprog
+% B redistributed
+B_r = [thr1 thr2_x thr2_y thr3 thr4_x thr4_y thr5_x thr5_y];
+
+Aeq = [B_r -B_r eye(3) -eye(3)];
+beq = tau;
+
+% Thruster Saturation Constraints
+u_max = [125 150 150 125 300 300 300 300].';
+u_min = [-125 0 0 -125 0 0 0 0].';
+
+A = [eye(8) -eye(8) zeros(8,3) zeros(8,3);
+     -eye(8) eye(8) zeros(8,3) zeros(8,3)];
+
+b = [u_min;
+     u_max];
+
+lb = [];
+ub = [];
+(H,f,A,b,Aeq,beq,lb,ub,x0, options);
 
 % Slack Variable from auxiliary variables
 s = x0_opt(17:19) - x0_opt(20:22); % STILL DON'T NOW WHAT TO DO WITH THIS
