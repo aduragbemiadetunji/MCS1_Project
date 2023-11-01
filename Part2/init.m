@@ -184,7 +184,7 @@ slow_varying_time_constant = 100;
 u10 = 12;
 height = 3;
 kappa = 0.003;
-L = 1000;
+L = 1800;
 kappa2 = 0.0026;
 gust_limit = 40;
 %% Thrust Allocation Constants/Parameters
