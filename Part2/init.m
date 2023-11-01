@@ -20,7 +20,7 @@ nu0 = [0,0,0,0,0,0]';
 
 %% %% data for reference model
 %ti is 1/ti from slide 10
-ti = [1/5, 1/5, 1/10]; %good
+ti = [1/50, 1/50, 1/100]; %good
 Af = diag(ti);
 
 omega_is = [0.2, 0.2, 0.2]; %0.1 ish
@@ -33,7 +33,7 @@ Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
 simulation = 4;
-observer_type = 0; % 0 - NonLinear Passive, 1 - EKF
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
 change_position_time = 400;
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
@@ -113,54 +113,10 @@ npf.K_2 = diag([npf.k7_9]);
 npf.K_3 = diag([npf.k10_12]);
 npf.K_4 = diag([npf.k13_15]);
 %% EKF CONSTANTS AND TUNING PARAMETERS
-M = ModelParams.Mass;
-D = ModelParams.Damping;
-K_w = diag([1, 1, 1]); %-------TUNE
-Ew = [zeros(3); K_w];
-Eb = diag([1, 1, 1]); %-----TUNE 
-E = [Ew, zeros(6,3);
-            zeros(3,3), zeros(3,3);
-            zeros(3,3), Eb;
-            zeros(3,3),zeros(3,3)];
+M = Mass;
+D = Damping;
+[inv_M, Aw, Tb, Cw, E, B, H, R, Q, dt, inv_Tb, TAU] = get_observer_parameters(M);
 
-dt = 0.1;
-TAU = dt*E;E = [Ew, zeros(6,3);
-            zeros(3,3), zeros(3,3);
-            zeros(3,3), Eb;
-            zeros(3,3),zeros(3,3)];
-
-obs.Q = diag([1,1,0.1,1e4,1e4,1e5]);
-
-B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
-R = diag([1,1,0.1]); %tune later
-Q = diag([1,1,1,1e2,1e2,1e2])*10e1; %tune this
-
-
-Cw = [zeros(3) eye(3)];
-H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
-
-T_n = 15; %period of interest -- can tune
-omega_n = 2* pi / T_n;
-zetas = 0.5; %--- can tune
-Omega = diag([omega_n, omega_n, omega_n]);
-Caret = diag([zetas, zetas, zetas]);
-Tb = 0.1 * eye(3); %tune the 0.1
-inv_Tb = inv(Tb);
-Aw =  [zeros(3) eye(3);
-    -Omega^2 -2*Caret*Omega];
-
-K_w = diag([1, 1, 1]); %-------TUNE
-Ew = [zeros(3); K_w];
-
-Eb = diag([1, 1, 1]); %-----TUNE
-E = [Ew, zeros(6,3);
-            zeros(3,3), zeros(3,3);
-            zeros(3,3), Eb;
-            zeros(3,3),zeros(3,3)];
-
-
-inv_M = inv(M);
-TAU = dt*E;
 %% WIND VALLUES AND CONSTANTS
 %Simulation time
 N = 500;
