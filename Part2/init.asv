@@ -3,7 +3,7 @@
 %                                                                         %              
 % Set initial parameters for part1.slx and part2.slx                      %
 %                                                                         %
-% Created:      2018.07.12	Jon Bjørnø                                    %
+% Created:      2018.07.12	Jon BjÃ¸rnÃ¸                                    %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -80,7 +80,7 @@ Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 syms psi
 Param.T_n = 1.5*[10 10 10]; %period of interest -- can tune reduce
 Param.omega_n = 2* pi ./ Param.T_n;
-Param.zeta = [0.05 0.05 0.05]; %--- can tune reduceee 0.05
+Param.zeta = [0.05 0.085 0.085]; %--- can tune reduceee 0.05
 Param.Omega = diag([Param.omega_n]);
 Param.Caret = diag([Param.zeta]);
 Param.Tb = 1 * eye(3); %tune the 0.1
@@ -106,12 +106,12 @@ npf.k1_3 =  -2 * (npf.zeta_ni - npf.zeta_i) .* (npf.omega_ci./npf.omega_i);
 npf.k4_6 = 2 * npf.omega_i .* (npf.zeta_ni-npf.zeta_i);
 npf.k7_9 = npf.omega_ci;
 % npf.k13_15 = [6.5e06 6.5e06 2.5e09]; %-----can tune
-npf.k13_15 = 1000*[60 60 200];
+npf.k13_15 = 100*[60 60 20];
 npf.k10_12 = 0.08*npf.k13_15; %-----can tune
 
 npf.K_1 = [diag([npf.k1_3]); diag([npf.k4_6])];
 npf.K_2 = diag([npf.k7_9]);
-npf.K_3 = diag([npf.k10_12]); %0.01-0.1 k4
+npf.K_3 = diag([npf.k10_12]); %o.01-0.1 k4
 npf.K_4 = diag([npf.k13_15]); %propo to mass
 %% EKF CONSTANTS AND TUNING PARAMETERS
 M = Mass;
@@ -140,7 +140,7 @@ slow_varying_time_constant = 100;
 u10 = 12;
 height = 3;
 kappa = 0.003;
-L = 1800;
+L = 1000;
 kappa2 = 0.0026;
 gust_limit = 40;
 %% Thrust Allocation Constants/Parameters
