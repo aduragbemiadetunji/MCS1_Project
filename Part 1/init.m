@@ -71,9 +71,16 @@ Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
 Ki = [137.081306245593; 763.274947400198; 335358.448218978];
 Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 
+%% FOR running the other initialization files
+% run("/Users/aduragbemi/Desktop/MIR/NTNU/MCS1/Project/MCS1_Project/Part2/modeling.mlx")
+% run("/Part2/nonPassiveFilter.mlx")
+% run("/Part2/test.m")
+
+%% FOR AYON
+%observer
+ws_var.init_state = zeros(15,1);
+ws_var.init_Pk = 5*eye(15); %tune later
 
 
 
-
-% plot(simout.Data(:,1),simout.Data(:,2))
 
