@@ -78,7 +78,7 @@ Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 % run("/Part2/test.m")
 %% PASSIVE NON LINEAR OBSERVERS CONSTANTS AND TUNING VALUES
 syms psi
-Param.T_n = 1.5*[10 10 10]; %period of interest -- can tune reduce
+Param.T_n = 2*[10 10 10]; %period of interest -- can tune reduce
 Param.omega_n = 2* pi ./ Param.T_n;
 Param.zeta = [0.05 0.05 0.05]; %--- can tune reduceee 0.05
 Param.Omega = diag([Param.omega_n]);
