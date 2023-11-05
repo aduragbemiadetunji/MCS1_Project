@@ -41,32 +41,11 @@ Td = [Td_r(1);
       sqrt(Td_r(5)^2 + Td_r(6)^2);
       sqrt(Td_r(7)^2 + Td_r(8)^2)];
 
-% Thruster angle
-% if Td_r(2) == 0
-%     alpha2 = pi/2;
-% else
-%     alpha2 = atan(Td_r(3)/Td_r(2));
-% end
-% if Td_r(5) == 0
-%     alpha4 = pi/2;
-% else
-%     alpha4 = atan(Td_r(6)/Td_r(5));
-% end
-% if Td_r(7) == 0
-%     alpha5 = pi/2;
-% else
-%     alpha5 = atan(Td_r(8)/Td_r(7));
-% end
-
 alpha2 = atan2(Td_r(3),Td_r(2));
 alpha4 = atan2(Td_r(6),Td_r(5));
 alpha5 = atan2(Td_r(8),Td_r(7));
 
-%atan2(num,den)
-
-% alpha2 = atan(Td_r(3)/Td_r(2));
-% alpha4 = atan(Td_r(6)/Td_r(5));
-% alpha5 = atan(Td_r(8)/Td_r(7));
+%% CONSTRAIN 1 - Saturation Limit
 
 alpha = [pi/2; alpha2; pi/2; alpha4; alpha5];
 end
