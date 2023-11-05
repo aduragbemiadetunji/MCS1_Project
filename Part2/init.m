@@ -33,8 +33,8 @@ Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
 simulation = 4;
-observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
-change_position_time = 400;
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
+change_position_time = 800;
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
 Damping = diag([2.6486e5, 8.8164e5, 3.3774e8]);
@@ -123,7 +123,7 @@ N = 500;
 
 %% Wind constants/parameters
 %Set to 1 to turn on wind effect
-wind = 1;
+wind = 0;
 
 %Wind direction
 direction_limit = pi/36;
