@@ -29,7 +29,7 @@ Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
 Cw = [zeros(3) eye(3)];
 H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
 
-T_n = 9; %period of interest -- can tune
+T_n = 2; %period of interest -- can tune
 omega_n = 2* pi / T_n;
 zetas = 0.01; %--- can tune
 Omega = diag([omega_n, omega_n, omega_n]);

@@ -33,7 +33,7 @@ Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
 simulation = 4;
-observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
+observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
 change_position_time = 800;
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
@@ -106,7 +106,7 @@ npf.k1_3 =  -2 * (npf.zeta_ni - npf.zeta_i) .* (npf.omega_ci./npf.omega_i);
 npf.k4_6 = 2 * npf.omega_i .* (npf.zeta_ni-npf.zeta_i);
 npf.k7_9 = npf.omega_ci;
 % npf.k13_15 = [6.5e06 6.5e06 2.5e09]; %-----can tune
-npf.k13_15 = 1000*[60 60 200];
+npf.k13_15 = 1000*[45 40 100];
 npf.k10_12 = 0.08*npf.k13_15; %-----can tune
 
 npf.K_1 = [diag([npf.k1_3]); diag([npf.k4_6])];
@@ -123,7 +123,7 @@ N = 500;
 
 %% Wind constants/parameters
 %Set to 1 to turn on wind effect
-wind = 0;
+wind = 1;
 
 %Wind direction
 direction_limit = pi/36;
