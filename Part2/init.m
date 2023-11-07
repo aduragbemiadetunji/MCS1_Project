@@ -32,9 +32,11 @@ Gamma = diag(omega_is);
 Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
-simulation = 4;
+simulation = 1;
 observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
+thruster_type = 0; % 1 - Pseudo Inverse, 0- Quadratic Programming
 change_position_time = 800;
+% set_param('part2_MAIN/Thrust Allocation/okay', 'Commented', 'on')
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
 Damping = diag([2.6486e5, 8.8164e5, 3.3774e8]);
@@ -127,7 +129,7 @@ wind = 1;
 
 %Wind direction
 direction_limit = pi/36;
-mean_wind_direction = pi/2;
+mean_wind_direction = pi; %wind direction adjustment pi for North pi/2
 np_direction = 0.1;
 direction_time_constant = 100;
 
