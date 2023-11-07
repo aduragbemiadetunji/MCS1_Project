@@ -20,7 +20,7 @@ nu0 = [0,0,0,0,0,0]';
 
 %% %% data for reference model
 %ti is 1/ti from slide 10
-ti = [1/50, 1/50, 1/100]; %good
+ti = [1/100, 1/100, 1/200]; %good
 Af = diag(ti);
 
 omega_is = [0.2, 0.2, 0.2]; %0.1 ish

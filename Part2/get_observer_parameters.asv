@@ -18,7 +18,7 @@ TAU = dt*E;E = [Ew, zeros(6,3);
 
 B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
 
-R = diag([0.00001,0.00001,0.01*pi/180])*10e-4; %tune later %measurement
+R = diag([0.001,0.00001,0.01*pi/180])*10e-4; %tune later %measurement
 
 Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
 
