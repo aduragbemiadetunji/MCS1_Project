@@ -33,7 +33,7 @@ Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
 simulation = 1;
-observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
 thruster_type = 0; % 1 - Pseudo Inverse, 0- Quadratic Programming
 change_position_time = 800;
 % set_param('part2_MAIN/Thrust Allocation/okay', 'Commented', 'on')
@@ -70,8 +70,13 @@ rise_time = 10; %--- can tune
 % Ki = -[-540.64009360768; -3153.2361136748; -1036593.12054623];
 % Kd = -[-885551.128894883; -1413618.40984523; -582749740.806195];
 
+% Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
+% Ki = [137.081306245593; 763.274947400198; 335358.448218978];
+% Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
+
+
 Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
-Ki = [137.081306245593; 763.274947400198; 335358.448218978];
+Ki = [137.081306245593; 3163.274947400198; 335358.448218978];
 Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 
 %% FOR running the other initialization files
