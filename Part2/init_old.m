@@ -3,7 +3,7 @@
 %                                                                         %              
 % Set initial parameters for part1.slx and part2.slx                      %
 %                                                                         %
-% Created:      2018.07.12	Jon BjÃ¸rnÃ¸                                    %
+% Created:      2018.07.12	Jon Bjørnø                                    %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -20,7 +20,7 @@ nu0 = [0,0,0,0,0,0]';
 
 %% %% data for reference model
 %ti is 1/ti from slide 10
-ti = [1/50, 1/50, 1/100]; %good
+ti = [1/200, 1/200, 1/200]; %good
 Af = diag(ti);
 
 omega_is = [0.2, 0.2, 0.2]; %0.1 ish
@@ -32,9 +32,11 @@ Gamma = diag(omega_is);
 Omega = diag(2*omega_is.*zeta_is);
 
 %number of simulation
-simulation = 4;
-observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
-change_position_time = 400;
+simulation = 1;
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
+thruster_type = 0; % 1 - Pseudo Inverse, 0- Quadratic Programming
+change_position_time = 1200;
+% set_param('part2_MAIN/Thrust Allocation/okay', 'Commented', 'on')
 %% PID Parameters
 Mass = diag([vesselABC.MRB(1,1), vesselABC.MRB(2,2), vesselABC.MRB(6,6)]); %vesselABC.MRB(1:3,1:3);
 Damping = diag([2.6486e5, 8.8164e5, 3.3774e8]);
@@ -68,8 +70,13 @@ rise_time = 10; %--- can tune
 % Ki = -[-540.64009360768; -3153.2361136748; -1036593.12054623];
 % Kd = -[-885551.128894883; -1413618.40984523; -582749740.806195];
 
+% Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
+% Ki = [137.081306245593; 763.274947400198; 335358.448218978];
+% Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
+
+
 Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
-Ki = [137.081306245593; 763.274947400198; 335358.448218978];
+Ki = [137.081306245593; 3163.274947400198; 335358.448218978];
 Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 
 %% FOR running the other initialization files
@@ -78,9 +85,9 @@ Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 % run("/Part2/test.m")
 %% PASSIVE NON LINEAR OBSERVERS CONSTANTS AND TUNING VALUES
 syms psi
-Param.T_n = 1.5*[10 10 10]; %period of interest -- can tune reduce
+Param.T_n = 1.8*[5 1 5]; %period of interest -- can tune reduce
 Param.omega_n = 2* pi ./ Param.T_n;
-Param.zeta = [0.05 0.085 0.085]; %--- can tune reduceee 0.05
+Param.zeta = [0.05 0.05 0.05]; %--- can tune reduceee 0.05
 Param.Omega = diag([Param.omega_n]);
 Param.Caret = diag([Param.zeta]);
 Param.Tb = 1 * eye(3); %tune the 0.1
@@ -106,12 +113,12 @@ npf.k1_3 =  -2 * (npf.zeta_ni - npf.zeta_i) .* (npf.omega_ci./npf.omega_i);
 npf.k4_6 = 2 * npf.omega_i .* (npf.zeta_ni-npf.zeta_i);
 npf.k7_9 = npf.omega_ci;
 % npf.k13_15 = [6.5e06 6.5e06 2.5e09]; %-----can tune
-npf.k13_15 = 100*[60 60 20];
+npf.k13_15 = 10000*[30 30 1000];
 npf.k10_12 = 0.08*npf.k13_15; %-----can tune
 
 npf.K_1 = [diag([npf.k1_3]); diag([npf.k4_6])];
 npf.K_2 = diag([npf.k7_9]);
-npf.K_3 = diag([npf.k10_12]); %o.01-0.1 k4
+npf.K_3 = diag([npf.k10_12]); %0.01-0.1 k4
 npf.K_4 = diag([npf.k13_15]); %propo to mass
 %% EKF CONSTANTS AND TUNING PARAMETERS
 M = Mass;
@@ -127,7 +134,7 @@ wind = 1;
 
 %Wind direction
 direction_limit = pi/36;
-mean_wind_direction = pi/2;
+mean_wind_direction = pi; %wind direction adjustment pi for North pi/2
 np_direction = 0.1;
 direction_time_constant = 100;
 
@@ -140,7 +147,7 @@ slow_varying_time_constant = 100;
 u10 = 12;
 height = 3;
 kappa = 0.003;
-L = 1000;
+L = 1800;
 kappa2 = 0.0026;
 gust_limit = 40;
 %% Thrust Allocation Constants/Parameters

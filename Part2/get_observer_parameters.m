@@ -18,7 +18,7 @@ TAU = dt*E;E = [Ew, zeros(6,3);
 
 B =  [zeros(6,3);zeros(3,3);zeros(3,3);inv(M)];
 
-R = diag([1,0.1,0.1*pi/180])*10e-3; %tune later %measurement
+R = diag([0.00001,0.00001,0.01*pi/180])*10e-4; %tune later %measurement
 
 Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
 
@@ -29,10 +29,11 @@ Q = diag([0.1,0.1,pi/180,1e6,1e6,1e9])*10e3; %tune this
 Cw = [zeros(3) eye(3)];
 H = [Cw, eye(3), zeros(3,3) zeros(3,3)];
 
-T_n = 2; %period of interest -- can tune
-omega_n = 2* pi / T_n;
+T_n = [0.6 0.15 0.2]; %period of interest -- can tune
+omega_n = 2* pi ./ T_n;
 zetas = 0.01; %--- can tune
-Omega = diag([omega_n, omega_n, omega_n]);
+% Omega = diag([omega_n, omega_n, omega_n]);
+Omega = diag([omega_n]);
 Caret = diag([zetas, zetas, zetas]);
 Tb = 0.1 * eye(3); %tune the 0.1
 inv_Tb = inv(Tb);
