@@ -138,7 +138,7 @@ hold on
 plot(Eta_sp.Time, Eta_sp.Data(:,1), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
 title('Position and reference position in surge', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
-ylabel('Surgae (m)', 'FontSize', commonFontSize) 
+ylabel('Surge (m)', 'FontSize', commonFontSize) 
 grid on
 legend({'surge', 'surge_sp'}, 'FontSize', commonFontSize)
 
@@ -165,6 +165,77 @@ legend({'yaw', 'yaw_sp'}, 'FontSize', commonFontSize)
 if saveFigures
     etaPlotsPath = fullfile(saveDirectory, 'EtaPlot.png');
     print(etaPlotsFigure, etaPlotsPath, '-dpng', '-r300'); 
+end
+
+% Error Plots
+errorPlotsFigure = figure('Position', [100, 100, 600, 800])
+% First subplot for Tau_x
+subplot(3, 1, 1) % 3 rows, 1 column, first subplot
+plot(Eta_sp.Time, Eta_sp.Data(:,1) - Eta.Data(:,1), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Position error in surge', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Surge error (m)', 'FontSize', commonFontSize) 
+grid on
+legend({'surge error'}, 'FontSize', commonFontSize)
+
+subplot(3, 1, 2) % 3 rows, 1 column, first subplot
+plot(Eta_sp.Time, Eta_sp.Data(:,2) - Eta.Data(:,2), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Position error in sway', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Sway error (m)', 'FontSize', commonFontSize) 
+grid on
+legend({'sway error'}, 'FontSize', commonFontSize)
+
+subplot(3, 1, 3) % 3 rows, 1 column, first subplot
+plot(Eta_sp.Time, Eta_sp.Data(:,3)- Eta.Data(:,3), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Orientation error in yaw', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Yaw error(rad)', 'FontSize', commonFontSize) 
+grid on
+legend({'yaw error'}, 'FontSize', commonFontSize)
+
+if saveFigures
+    errorPlotsPath = fullfile(saveDirectory, 'ErrorPlot.png');
+    print(errorPlotsFigure, errorPlotsPath, '-dpng', '-r300'); 
+end
+
+
+% Velocity Plots
+nuPlotsFigure = figure('Position', [100, 100, 600, 800])
+% First subplot for Tau_x
+subplot(3, 1, 1) % 3 rows, 1 column, first subplot
+plot(nu.Time, nu.Data(:,1), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
+hold on
+plot(nu_sp.Time, nu_sp.Data(:,1), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Velocity, observer velocity and reference velocity in surge', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Surge velocity (m/s)', 'FontSize', commonFontSize) 
+grid on
+legend({'surge velocity', 'surge_sp velocity', 'surge_obs velocity'}, 'FontSize', commonFontSize)
+
+subplot(3, 1, 2) % 3 rows, 1 column, first subplot
+plot(nu.Time, nu.Data(:,2), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
+hold on
+plot(nu_sp.Time, nu_sp.Data(:,2), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Velocity, observer velocity and reference velocity in sway', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Sway velocity (m/s)', 'FontSize', commonFontSize) 
+grid on
+legend({'sway velocity', 'sway_sp velocity', 'sway_obs velocity'}, 'FontSize', commonFontSize)
+
+subplot(3, 1, 3) % 3 rows, 1 column, first subplot
+plot(nu.Time, nu.Data(:,3), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
+hold on
+plot(nu_sp.Time, nu_sp.Data(:,3), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
+title('Velocity, observer velocity and reference velocity in yaw', 'FontSize', commonFontSize)
+xlabel('Time(s)', 'FontSize', commonFontSize)
+ylabel('Yaw velocity (rad/s)', 'FontSize', commonFontSize) 
+grid on
+legend({'yaw velocity', 'yaw_sp velocity', 'yaw_obs velocity'}, 'FontSize', commonFontSize)
+
+if saveFigures
+    nuPlotsPath = fullfile(saveDirectory, 'nuPlot.png');
+    print(nuPlotsFigure, nuPlotsPath, '-dpng', '-r300'); 
 end
 
 

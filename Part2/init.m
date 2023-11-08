@@ -18,6 +18,21 @@ eta0 = [0,0,0,0,0,0]';
 % Initial velocity u, v, w, p, q, r
 nu0 = [0,0,0,0,0,0]';
 
+
+% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 1);
+% set_param(simulation_selector_str, 'Commented', 'off')
+
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 2);
+set_param(simulation_selector_str, 'Commented', 'on')
+
+% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 3);
+% set_param(simulation_selector_str, 'Commented', 'off')
+% 
+% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 4);
+% set_param(simulation_selector_str, 'Commented', 'off')
+
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 5);
+set_param(simulation_selector_str, 'Commented', 'on')
 %%
 %number of simulation
 simulation = 2;
