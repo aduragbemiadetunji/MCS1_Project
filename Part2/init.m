@@ -19,32 +19,46 @@ eta0 = [0,0,0,0,0,0]';
 nu0 = [0,0,0,0,0,0]';
 
 
-% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 1);
-% set_param(simulation_selector_str, 'Commented', 'off')
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 1);
+set_param(simulation_selector_str, 'Commented', 'on')
 
 simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 2);
 set_param(simulation_selector_str, 'Commented', 'on')
 
-% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 3);
-% set_param(simulation_selector_str, 'Commented', 'off')
-% 
-% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 4);
-% set_param(simulation_selector_str, 'Commented', 'off')
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 3);
+set_param(simulation_selector_str, 'Commented', 'on')
+
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 4);
+set_param(simulation_selector_str, 'Commented', 'on')
 
 simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 5);
 set_param(simulation_selector_str, 'Commented', 'on')
+
+% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 6);
+% set_param(simulation_selector_str, 'Commented', 'on')
+% 
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 7);
+set_param(simulation_selector_str, 'Commented', 'on')
 %%
+
 %number of simulation
-simulation = 2;
-observer_type = 1; % 1 - NonLinear Passive, 0 - EKF
-thruster_type = 1; % 1 - Pseudo Inverse, 0 - Quadratic Programming
+simulation = 7;
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
+thruster_type = 0; % 1 - Pseudo Inverse, 0 - Quadratic Programming
 change_position_time = 1200;
 
+thruster_selector_str=sprintf("%s/Thrust Allocation/%d",simulation_selector_str,0);
+set_param(thruster_selector_str, 'Commented', 'on')
 
+thruster_selector_str=sprintf("%s/Thrust Allocation/%d",simulation_selector_str,1);
+set_param(thruster_selector_str, 'Commented', 'on')
+
+thruster_selector_str=sprintf("%s/Thrust Allocation/%d",simulation_selector_str,thruster_type);
+set_param(thruster_selector_str, 'Commented', 'off')
 %%
 %set simulations
 %setting simulation
-simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d',simulation);
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', simulation);
 set_param(simulation_selector_str, 'Commented', 'off')
 
 thruster_selector_str=sprintf("%s/Thrust Allocation/%d",simulation_selector_str,thruster_type);
@@ -71,9 +85,6 @@ T_n = 70; %period of interest -- can tune
 omega_n_dp = 2* pi / T_n;
 zeta = 0.7; %--- can tune
 rise_time = 10; %--- can tune
-
-
-
 
 Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
 Ki = [137.081306245593; 3163.274947400198; 335358.448218978];
@@ -151,7 +162,7 @@ gust_limit = 40;
 
 %%
 % running the simulation
-sim('part2_MAIN_2019',6000)
+sim('part2_MAIN_2019',1000)
 plotting_str = sprintf("plot_results_%d",simulation);
 eval(plotting_str)
 

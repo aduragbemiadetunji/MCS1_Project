@@ -1,7 +1,7 @@
 close all
 
 saveFigures = false; % Set to true to save figures
-saveDirectory = 'test'; % Update with your path
+saveDirectory = 'sim2b'; % Update with your path
 commonFontSize = 12;
 
 
@@ -140,7 +140,7 @@ title('Position and reference position in surge', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Surge (m)', 'FontSize', commonFontSize) 
 grid on
-legend({'surge', 'surge_sp'}, 'FontSize', commonFontSize)
+legend({'surge', 'surge sp'}, 'FontSize', commonFontSize)
 
 subplot(3, 1, 2) % 3 rows, 1 column, first subplot
 plot(Eta.Time, Eta.Data(:,2), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
@@ -150,7 +150,7 @@ title('Position and reference position in sway', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Sway (m)', 'FontSize', commonFontSize) 
 grid on
-legend({'sway', 'sway_sp'}, 'FontSize', commonFontSize)
+legend({'sway', 'sway sp'}, 'FontSize', commonFontSize)
 
 subplot(3, 1, 3) % 3 rows, 1 column, first subplot
 plot(Eta.Time, Eta.Data(:,3), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
@@ -160,7 +160,7 @@ title('Orientation and reference orientation in yaw', 'FontSize', commonFontSize
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Yaw (rad)', 'FontSize', commonFontSize) 
 grid on
-legend({'yaw', 'yaw_sp'}, 'FontSize', commonFontSize)
+legend({'yaw', 'yaw sp'}, 'FontSize', commonFontSize)
 
 if saveFigures
     etaPlotsPath = fullfile(saveDirectory, 'EtaPlot.png');
@@ -207,31 +207,31 @@ subplot(3, 1, 1) % 3 rows, 1 column, first subplot
 plot(nu.Time, nu.Data(:,1), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
 hold on
 plot(nu_sp.Time, nu_sp.Data(:,1), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
-title('Velocity, observer velocity and reference velocity in surge', 'FontSize', commonFontSize)
+title('Velocity, and reference velocity in surge', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Surge velocity (m/s)', 'FontSize', commonFontSize) 
 grid on
-legend({'surge velocity', 'surge_sp velocity', 'surge_obs velocity'}, 'FontSize', commonFontSize)
+legend({'surge velocity', 'surge sp velocity', 'surge obs velocity'}, 'FontSize', commonFontSize)
 
 subplot(3, 1, 2) % 3 rows, 1 column, first subplot
 plot(nu.Time, nu.Data(:,2), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
 hold on
 plot(nu_sp.Time, nu_sp.Data(:,2), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
-title('Velocity, observer velocity and reference velocity in sway', 'FontSize', commonFontSize)
+title('Velocity, and reference velocity in sway', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Sway velocity (m/s)', 'FontSize', commonFontSize) 
 grid on
-legend({'sway velocity', 'sway_sp velocity', 'sway_obs velocity'}, 'FontSize', commonFontSize)
+legend({'sway velocity', 'sway sp velocity', 'sway obs velocity'}, 'FontSize', commonFontSize)
 
 subplot(3, 1, 3) % 3 rows, 1 column, first subplot
 plot(nu.Time, nu.Data(:,3), 'LineWidth', 2, 'Color', [1, 0, 0]) % bright red
 hold on
 plot(nu_sp.Time, nu_sp.Data(:,3), 'LineWidth', 2, 'Color', [0, 0, 1]) % bright red
-title('Velocity, observer velocity and reference velocity in yaw', 'FontSize', commonFontSize)
+title('Velocity, and reference velocity in yaw', 'FontSize', commonFontSize)
 xlabel('Time(s)', 'FontSize', commonFontSize)
 ylabel('Yaw velocity (rad/s)', 'FontSize', commonFontSize) 
 grid on
-legend({'yaw velocity', 'yaw_sp velocity', 'yaw_obs velocity'}, 'FontSize', commonFontSize)
+legend({'yaw velocity', 'yaw sp velocity', 'yaw obs velocity'}, 'FontSize', commonFontSize)
 
 if saveFigures
     nuPlotsPath = fullfile(saveDirectory, 'nuPlot.png');
@@ -239,14 +239,32 @@ if saveFigures
 end
 
 
+% %%XY Plot
+% xyPlotFigure = figure('Position', [100, 100, 800, 800])
+% plot(Eta.Data(:,1),Eta.Data(:,2), 'LineWidth', 2, 'Color', [1, 0, 0])
+% hold on
+% plot(Eta_sp.Data(:,1),Eta_sp.Data(:,2), 'LineWidth', 2, 'Color', [0, 0, 1])
+% legend({'Position', 'Position SP'})
+% grid on
+% title('XY plot')
+% xlabel('North (m)')
+% ylabel('East (m)')
+
+
 %%XY Plot
 xyPlotFigure = figure('Position', [100, 100, 800, 800])
 plot(Eta.Data(:,1),Eta.Data(:,2), 'LineWidth', 2, 'Color', [1, 0, 0])
 hold on
 plot(Eta_sp.Data(:,1),Eta_sp.Data(:,2), 'LineWidth', 2, 'Color', [0, 0, 1])
-legend({'Position', 'Position SP'})
+hold on
+x = Eta.Data(:,1);
+y = Eta.Data(:,2);
+psi = Eta.Data(:,3);
+% plot(Eta_obs.Data(:,1),Eta_obs.Data(:,2), 'LineWidth', 2, 'Color', [0, 1, 0])
+quiver(x(1:1000:end),y(1:1000:end), 0.0001*cos(psi(1:1000:end)), 0.0001*sin(psi(1:1000:end)) ,'k','AutoScale','on');
+legend({'Position', 'Position SP', 'Vessel Heading'})
 grid on
-title('XY plot')
+title('XY plot with Heading')
 xlabel('North (m)')
 ylabel('East (m)')
 
