@@ -134,7 +134,7 @@ wind = 1;
 
 %Wind direction
 direction_limit = pi/36;
-mean_wind_direction = pi; %wind direction adjustment pi for North pi/2
+mean_wind_direction = pi; %wind direction adjustment pi for North
 np_direction = 0.1;
 direction_time_constant = 100;
 

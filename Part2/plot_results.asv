@@ -19,7 +19,7 @@ grid on
 title('Total wind')
 xlabel('Time')
 ylabel('Wind speed (m/s)')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\total_wind");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\total_wind");
 
 figure(3)
 yyaxis left
@@ -33,7 +33,7 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'x', '\alpha'})
 grid on
 title('Generalized wind force in x')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force1");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force1");
 
 figure(4)
 yyaxis left
@@ -47,7 +47,7 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'y', '\alpha'})
 grid on
 title('Generalized wind force in y')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force2");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force2");
 
 figure(5)
 yyaxis left
@@ -61,7 +61,7 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'z', '\alpha'})
 grid on
 title('Generalized wind force in z')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force3");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force3");
 
 figure(6)
 yyaxis left
@@ -75,7 +75,7 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'\phi', '\alpha'})
 grid on
 title('Generalized wind force in \phi')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force4");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force4");
 
 figure(7)
 yyaxis left
@@ -89,7 +89,7 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'\theta', '\alpha'})
 grid on
 title('Generalized wind force in \theta')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force5");
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force5");
 
 figure(8)
 yyaxis left
@@ -103,22 +103,14 @@ plot(wind_angle.Time, wind_angle.Data, 'LineWidth', 0.5)
 legend({'\psi', '\alpha'})
 grid on
 title('Generalized wind force in \psi')
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force6");
-
-close all
-
-mean_wind_direction2 = pi*ones(1,301);
+print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_force6");
 
 figure(9)
 plot(wind_direction.Time, wind_direction.Data, 'LineWidth', 0.5)
-hold on
-plot(wind_direction.Time, mean_wind_direction2, 'LineWidth', 0.5)
+
 ylabel('Wind direction (rad)')
 xlabel('Time')
 title('Wind direction')
-legend({'wind direction', 'mean wind direction'})
-grid on
-%print('-dpng','-r600',"C:\Users\mariu\OneDrive\NTNU\Høst 2023\Marin\Project part 2\wind_dir");
 
 
 
