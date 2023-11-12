@@ -18,6 +18,15 @@ eta0 = [0,0,0,0,0,0]';
 % Initial velocity u, v, w, p, q, r
 nu0 = [0,0,0,0,0,0]';
 
+%%
+%SELECTORS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%number of simulation
+simulation = 3; %change from simulation 1 - 7 to see plots
+simulation_time = 6500; %sim1 = 300; sim2 - sim5 = 6500; sim6 = 3000; sim7 = 1000;
+observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
+thruster_type = 0; % 1 - Pseudo Inverse, 0 - Quadratic Programming
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 1);
 set_param(simulation_selector_str, 'Commented', 'on')
@@ -34,19 +43,13 @@ set_param(simulation_selector_str, 'Commented', 'on')
 simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 5);
 set_param(simulation_selector_str, 'Commented', 'on')
 
-% simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 6);
-% set_param(simulation_selector_str, 'Commented', 'on')
-% 
+simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 6);
+set_param(simulation_selector_str, 'Commented', 'on')
+
 simulation_selector_str = sprintf('part2_MAIN_2019/Simulation %d', 7);
 set_param(simulation_selector_str, 'Commented', 'on')
-%%
 
-%number of simulation
-simulation = 7;
-observer_type = 0; % 1 - NonLinear Passive, 0 - EKF
-thruster_type = 0; % 1 - Pseudo Inverse, 0 - Quadratic Programming
 change_position_time = 1200;
-
 thruster_selector_str=sprintf("%s/Thrust Allocation/%d",simulation_selector_str,0);
 set_param(thruster_selector_str, 'Commented', 'on')
 
@@ -86,9 +89,15 @@ omega_n_dp = 2* pi / T_n;
 zeta = 0.7; %--- can tune
 rise_time = 10; %--- can tune
 
+%FOR all tests
 Kp = [75459.3345349083; 277551.73586971; 120744473.878042];
 Ki = [137.081306245593; 3163.274947400198; 335358.448218978];
 Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
+
+%FOR Simulation 6 and 7
+% Kp = [95459.3345349083; 277551.73586971; 120744473.878042];
+% Ki = [117.081306245593; 3163.274947400198; 335358.448218978];
+% Kd = [1660451.40544401; 3920391.80535684; 1605063439.04156];
 
 
 %% PASSIVE NON LINEAR OBSERVERS CONSTANTS AND TUNING VALUES
@@ -159,10 +168,16 @@ L = 1800;
 kappa2 = 0.0026;
 gust_limit = 40;
 %% Thrust Allocation Constants/Parameters
+%% Current speed
+u_c = 0.2;
+simu_step = 36;
+xi = pi + (simu_step-1)*10*pi/180;
+x_current = u_c*cos(xi);
+y_current = u_c*sin(xi);
 
 %%
 % running the simulation
-sim('part2_MAIN_2019',1000)
+sim('part2_MAIN_2019', simulation_time)
 plotting_str = sprintf("plot_results_%d",simulation);
 eval(plotting_str)
 

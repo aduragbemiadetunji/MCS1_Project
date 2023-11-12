@@ -82,3 +82,32 @@ grid on
 title('Tau Plot')
 xlabel('Time')
 ylabel('Tau(N, N, Nm)')
+
+
+figure(7)
+plot(nu.Time, nu.Data, 'LineWidth', 2)
+hold on
+% plot(Eta.Data(:,2), 'LineWidth', 2)
+% hold on
+% plot(Eta.Data(:,3), 'LineWidth', 2)
+legend({'nu_x', 'nu_y', 'nu_{yaw}'})
+grid on
+% xlim([0 2000])
+title('Velocity Plot')
+xlabel('Time')
+ylabel('Velocity m/s')
+
+
+figure(8)
+plot(nu_sp.Time, nu_sp.Data, 'LineWidth', 2)
+hold on
+% plot(Eta.Data(:,2), 'LineWidth', 2)
+% hold on
+% plot(Eta.Data(:,3), 'LineWidth', 2)
+legend({'nu_x SP', 'nu_y SP', 'nu_{yaw} SP'})
+grid on
+% xlim([0 2000])
+title('Reference Velocity Plot')
+xlabel('Time')
+ylabel('Velocity m/s')
+
